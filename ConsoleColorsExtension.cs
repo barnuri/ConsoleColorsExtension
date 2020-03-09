@@ -6,7 +6,12 @@ namespace ConsoleColorsExtension
     {
         private const string Reset = "\u001b[0m";
 
-        public static string CleanColors(this string str) => string.IsNullOrEmpty(str) ? str : Regex.Replace(str, "\\u001b\\[[\\d]*m", "", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        public static string CleanColors(this string str)
+        {
+            if (string.IsNullOrEmpty(str)) { return str; }
+            var regex = new Regex("\\u001b\\[[\\d]+m", RegexOptions.None);
+            return regex.Replace(str, "");
+        }
 
         public static string ColorByNumber(this string str, int num) => $"\u001b[{num}m" + str + Reset;
         public static string Black(this string str) => ColorByNumber(str, 30);
