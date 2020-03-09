@@ -1,8 +1,12 @@
-﻿namespace ConsoleColorsExtension
+﻿using System.Text.RegularExpressions;
+
+namespace ConsoleColorsExtension
 {
     public static class ConsoleColorsExtension
     {
         private const string Reset = "\u001b[0m";
+
+        public static string CleanColors(this string str) => Regex.Replace(str, "\\\\u001b\\[\\dm", "", RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
         public static string ColorByNumber(this string str, int num) => $"\u001b[{num}m" + str + Reset;
         public static string Black(this string str) => ColorByNumber(str, 30);
